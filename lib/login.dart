@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 
+import 'register.dart';
+
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _LoginPageState createState() => _LoginPageState();
 }
+
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool rememberMe = false;
+  bool showPassword = false;
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +44,17 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   SizedBox(height: 15),
                   TextField(
-                      controller: emailController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black)),
-                        labelText: 'Email',
+                    controller: emailController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
                       ),
-                      cursorColor: Colors.black),
+                      labelText: 'Email',
+                    ),
+                    cursorColor: Colors.black,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
                 ],
               ),
             ),
@@ -61,12 +68,41 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black)),
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
                       labelText: 'Password',
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            showPassword = !showPassword;
+                          });
+                        },
+                        icon: Icon(
+                          showPassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                      ),
                     ),
                     cursorColor: Colors.black,
-                    obscureText: true,
+                    obscureText: !showPassword,
                   ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: rememberMe,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        rememberMe = value!;
+                      });
+                    },
+                  ),
+                  Text('Remember me'),
                 ],
               ),
             ),
@@ -86,6 +122,25 @@ class _LoginPageState extends State<LoginPage> {
               child: const Text(
                 'Login',
                 style: TextStyle(color: Colors.white, fontSize: 25),
+              ),
+            ),
+            const SizedBox(height: 15),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterPage()),
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('New here? '),
+                  Text(
+                    'Create an account',
+                    style: TextStyle(color: Colors.blue),
+                  ),
+                ],
               ),
             ),
           ],
