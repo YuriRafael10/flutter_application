@@ -21,9 +21,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Register Page'),
-      ),
+      
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),
         child: Column(
